@@ -54,6 +54,8 @@ if &t_Co > 2 || has("gui_running")
 
   " Also switch on highlighting the last used search pattern.
   set hlsearch
+  "toggle hlsearch on and off  with F3
+  nnoremap <F3> :set hlsearch!<CR>
 
   " I like highlighting strings inside C comments.
   let c_comment_strings=1
@@ -127,10 +129,10 @@ if has('gui_running')
 else
   let g:solarized_termcolors=16
 endif
-colorscheme solarized
+" colorscheme solarized
 
 "set GUI font
-set guifont=Consolas:h10:cANSI
+set guifont=Consolas:h12:cANSI
 
 "set omnifunc
 set omnifunc=syntaxcomplete#Complete
@@ -146,9 +148,18 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
+"switch buffers easier
+:nnoremap <F5> : buffers<CR>:buffer<Space>
 
 "set color of column
 set colorcolumn=81
 highlight colorColumn ctermbg=gray
 
 
+set showmode                    " show the current mode
+" Show EOL type and last modified timestamp, right after the filename
+set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
+set ai                          " set auto-indenting on for programming
+set showmatch                   " automatically show matching brackets. works like it does in bbedit.
+set vb                          " turn on the "visual bell" - which is much quieter than the "audio blink"
+set laststatus=2                " make the last line where the status is two lines deep so you can see status always
