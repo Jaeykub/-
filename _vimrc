@@ -123,6 +123,9 @@ set nu
 "use dark background
 set background=dark
 
+"redraw screen only when needed
+set lazyredraw
+
 "set color of column
 let &colorcolumn=join(range(81,999),",")
 
