@@ -49,14 +49,14 @@ endif
 
 " Switch syntax highlighting on when the terminal has colors or when using the
 " GUI (which always has colors).
-if &t_Co > 2 || has("gui_running")
+if has("gui_running")
   syntax on
 
-  " Also switch on highlighting the last used search pattern.
-  set hlsearch
+" Also switch on highlighting the last used search pattern.
+set hlsearch
 
-  " I like highlighting strings inside C comments.
-  let c_comment_strings=1
+" I like highlighting strings inside C comments.
+let c_comment_strings=1
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -122,12 +122,37 @@ set nu
 
 "use dark background
 set background=dark
-if has('gui_running')
-  let g:solarized_termcolors=256
-else
-  let g:solarized_termcolors=16
+
+"set color of column
+let &colorcolumn=join(range(81,999),",")
+
+""Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+""If you're using tmux version 2.2 or later, remove the outermost $TMUX check.
+if (empty($TMUX))
+    "For Neovim 0.1.3 and 0.1.4
+    if (has("nvim"))
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
+
+    "For Neovim 0.1.5+ and Vim 7.4.1799+
+    if (has("gui_running"))
+        "set termguicolors
+        "deep-space colorscheme and options
+        colorscheme solarized
+    else
+        colorscheme deep-space
+        let g:deepspace_italics = 1
+        highlight ColorColumn ctermbg=235 guibg=#2c2d27
+        set t_Co=256
+    endif
 endif
-colorscheme solarized
+
+"if has('gui_running')
+"  let g:solarized_termcolors=256
+"else
+"  let g:solarized_termcolors=16
+"endif
+"colorscheme solarized
 
 "set GUI font
 set guifont=Consolas:h10:cANSI
@@ -146,9 +171,29 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
+set showmode                    " show the current mode
+" Show EOL type and last modified timestamp, right after the filename
+set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
+set ai                          " set auto-indenting on for programming
+set showmatch                   " automatically show matching brackets. works like it does in bbedit.
+set vb                          " turn on the "visual bell" - which is much quieter than the "audio blink"
+set laststatus=2                " make the last line where the status is two lines deep so you can see status always
 
-"set color of column
-set colorcolumn=81
-highlight colorColumn ctermbg=gray
+"move lines key mapping
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
+"navigate splits easier
+nnoremap <Down> <C-W><C-j>
+nnoremap <Up> <C-W><C-k>
+nnoremap <Right> <C-W><C-l>
+nnoremap <Left> <C-W><C-h>
+
+"navigate tabs easier
+nnoremap <C-Right> gt
+nnoremap <C-Left> gT
 
