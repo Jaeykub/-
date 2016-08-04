@@ -124,12 +124,24 @@ set nu
 
 "use dark background
 set background=dark
-if has('gui_running')
-  let g:solarized_termcolors=256
-else
-  let g:solarized_termcolors=16
+"use 24bit color
+if (empty($TMUX))
+    if(has("nvim"))
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
+
+    if(has("termguicolors"))
+        set termguicolors
+    else
+        set t_Co=256
+    endif
 endif
-" colorscheme solarized
+"if has('gui_running')
+"  let g:solarized_termcolors=256
+"else
+"  let g:solarized_termcolors=16
+"endif
+colorscheme deep-space
 
 "set GUI font
 set guifont=Consolas:h12:cANSI
@@ -152,8 +164,8 @@ set expandtab
 :nnoremap <F5> : buffers<CR>:buffer<Space>
 
 "set color of column
-set colorcolumn=81
-highlight colorColumn ctermbg=gray
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 
 set showmode                    " show the current mode
@@ -163,3 +175,22 @@ set ai                          " set auto-indenting on for programming
 set showmatch                   " automatically show matching brackets. works like it does in bbedit.
 set vb                          " turn on the "visual bell" - which is much quieter than the "audio blink"
 set laststatus=2                " make the last line where the status is two lines deep so you can see status always
+
+"move lines key mapping
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"navigate splits easier
+nnoremap <Down> <C-W><C-j>
+nnoremap <Up> <C-W><C-k>
+nnoremap <Right> <C-W><C-l>
+nnoremap <Left> <C-W><C-h>
+
+"navigate tabs easier
+nnoremap <C-Right> gt
+nnoremap <C-Left> gT
+
