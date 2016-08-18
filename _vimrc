@@ -122,6 +122,7 @@ set smartcase
 "show number 
 set nu
 
+"===================== COLORS & VISUALS =========================
 "use dark background
 set background=dark
 "use 24bit color
@@ -145,6 +146,7 @@ colorscheme deep-space
 
 "set GUI font
 set guifont=Consolas:h12:cANSI
+"===================== END COLORS & VISUALS =========================
 
 "set omnifunc
 set omnifunc=syntaxcomplete#Complete
@@ -176,6 +178,7 @@ set showmatch                   " automatically show matching brackets. works li
 set vb                          " turn on the "visual bell" - which is much quieter than the "audio blink"
 set laststatus=2                " make the last line where the status is two lines deep so you can see status always
 
+"=============================Keybindings=======================================
 "move lines key mapping
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -194,3 +197,11 @@ nnoremap <Left> <C-W><C-h>
 nnoremap <C-Right> gt
 nnoremap <C-Left> gT
 
+"select all with Ctrl+a
+nnoremap <C-a> gg <S-v> G
+
+"set Ctrl+h to do search and replace
+nnoremap <C-h> :%s/\v
+
+"set Ctrl+f to do search
+nnoremap <C-f> /\v
