@@ -117,7 +117,7 @@ endif
 set ignorecase
 set smartcase
 
-"show number 
+"show number
 set nu
 
 "use dark background
@@ -141,7 +141,8 @@ if (empty($TMUX))
     if (has("gui_running"))
         "set termguicolors
         "deep-space colorscheme and options
-        colorscheme solarized
+        "colorscheme solarized
+        colorscheme deep-space
     else
         colorscheme deep-space
         let g:deepspace_italics = 1
@@ -163,7 +164,7 @@ set guifont=Consolas:h10:cANSI
 "set omnifunc
 set omnifunc=syntaxcomplete#Complete
 
-"better copy and paste 
+"better copy and paste
 " set pastetoggle=<F2>
 set clipboard=unnamed
 
@@ -190,6 +191,9 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+"find and replace
+nnoremap <C-h> :%s/
+
 "navigate splits easier
 nnoremap <Down> <C-W><C-j>
 nnoremap <Up> <C-W><C-k>
@@ -200,3 +204,9 @@ nnoremap <Left> <C-W><C-h>
 nnoremap <C-Right> gt
 nnoremap <C-Left> gT
 
+"set the leader key
+let mapleader=","
+
+"make braces
+nnoremap <Leader>, A()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
+inoremap <C-b> ()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
