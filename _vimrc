@@ -205,3 +205,10 @@ nnoremap <C-h> :%s/\v
 
 "set Ctrl+f to do search
 nnoremap <C-f> /\v
+
+"set the leader key
+let mapleader=","
+
+"make braces
+nnoremap <Leader>, A()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
+inoremap <C-b> ()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
