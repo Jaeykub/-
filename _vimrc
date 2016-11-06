@@ -54,6 +54,8 @@ if &t_Co > 2 || has("gui_running")
 
   " Also switch on highlighting the last used search pattern.
   set hlsearch
+  "toggle hlsearch on and off  with F3
+  nnoremap <F3> :set hlsearch!<CR>
 
   " I like highlighting strings inside C comments.
   let c_comment_strings=1
@@ -120,17 +122,31 @@ set smartcase
 "show number 
 set nu
 
+"===================== COLORS & VISUALS =========================
 "use dark background
 set background=dark
-if has('gui_running')
-  let g:solarized_termcolors=256
-else
-  let g:solarized_termcolors=16
+"use 24bit color
+if (empty($TMUX))
+    if(has("nvim"))
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
+
+    if(has("termguicolors"))
+        set termguicolors
+    else
+        set t_Co=256
+    endif
 endif
-colorscheme solarized
+"if has('gui_running')
+"  let g:solarized_termcolors=256
+"else
+"  let g:solarized_termcolors=16
+"endif
+colorscheme deep-space
 
 "set GUI font
-set guifont=Consolas:h10:cANSI
+set guifont=Consolas:h12:cANSI
+"===================== END COLORS & VISUALS =========================
 
 "set omnifunc
 set omnifunc=syntaxcomplete#Complete
@@ -146,9 +162,53 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
+"switch buffers easier
+:nnoremap <F5> : buffers<CR>:buffer<Space>
 
 "set color of column
-set colorcolumn=81
-highlight colorColumn ctermbg=gray
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 
+set showmode                    " show the current mode
+" Show EOL type and last modified timestamp, right after the filename
+set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
+set ai                          " set auto-indenting on for programming
+set showmatch                   " automatically show matching brackets. works like it does in bbedit.
+set vb                          " turn on the "visual bell" - which is much quieter than the "audio blink"
+set laststatus=2                " make the last line where the status is two lines deep so you can see status always
+
+"=============================Keybindings=======================================
+"move lines key mapping
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"navigate splits easier
+nnoremap <Down> <C-W><C-j>
+nnoremap <Up> <C-W><C-k>
+nnoremap <Right> <C-W><C-l>
+nnoremap <Left> <C-W><C-h>
+
+"navigate tabs easier
+nnoremap <C-Right> gt
+nnoremap <C-Left> gT
+
+"select all with Ctrl+a
+nnoremap <C-a> gg <S-v> G
+
+"set Ctrl+h to do search and replace
+nnoremap <C-h> :%s/\v
+
+"set Ctrl+f to do search
+nnoremap <C-f> /\v
+
+"set the leader key
+let mapleader=","
+
+"make braces
+nnoremap <Leader>, A()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
+inoremap <C-b> ()<CR>{<CR><CR>}<Up><Up><Up><Esc>$i
