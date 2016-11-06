@@ -191,8 +191,11 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
-"find and replace
-nnoremap <C-h> :%s/
+"set Ctrl+h to do search and replace
+nnoremap <C-h> :%s/\v
+
+"set Ctrl+f to do search
+nnoremap <C-f> /\v
 
 "navigate splits easier
 nnoremap <Down> <C-W><C-j>
