@@ -1,8 +1,3 @@
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 
 (custom-set-variables
@@ -10,16 +5,21 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tango-dark)))
- '(package-selected-packages (quote (pdf-tools evil async))))
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+ '(column-number-mode t)
+ '(custom-enabled-themes (quote (deeper-blue)))
+ '(package-selected-packages (quote (csharp-mode pdf-tools evil async)))
+ '(save-place t)
+ '(scroll-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;; set tab width
-(setq-default tab-width 4)
 
 ;;use melpa packages
 (require 'package)
@@ -33,9 +33,31 @@
 (require 'evil)
 (evil-mode 1)
 
+;;add find file
+(add-to-list 'load-path "~/.emacs.d/find-file-in-project")
+(require 'find-file-in-project)
+(if (eq system-type 'windows-nt)
+    (setq ffip-find-executable "C:\\cygwin64\\bin\\find.exe"))
+
+;;use word wrap
+(global-visual-line-mode)
+;;use adaptive wrap 
+(add-to-list 'load-path "~/.emacs.d/adaptive-wrap")
+(require 'adaptive-wrap)
+(add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
+
+;;save auto files in temp directory
+(setq backup-directory-alist
+	`((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+	`((".*" ,temporary-file-directory t)))
+
 ;;evil numbers
 (add-to-list 'load-path "~/.emacs.d/evil-numbers")
 (require 'evil-numbers)
 ;; and bind
 (global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
 (global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
+
+(global-set-key (kbd "C-<") 'previous-buffer)
+(global-set-key (kbd "C->") 'next-buffer)
